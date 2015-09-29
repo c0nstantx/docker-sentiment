@@ -16,6 +16,7 @@ ADD ./supervisord.conf /etc/supervisor/supervisord.conf
 
 #Install textblob
 RUN pip install --user textblob
+RUN python -m textblob.download_corpora
 
 #Install Flask
 RUN pip install --user Flask
