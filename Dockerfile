@@ -1,5 +1,5 @@
 #
-# Rocketgraph sentiment
+# Rocketgraph NLP
 #
 
 # Pull base image.
@@ -7,20 +7,23 @@ FROM rocketgraph/python
 
 MAINTAINER Konstantinos Christofilos <kostas.christofilos@rocketgraph.com>
 
-# Install supervisor
+# Install packages
 RUN apt-get -y update &&\
     apt-get -y upgrade &&\
-    apt-get -y install supervisor
+    apt-get -y install supervisor libhunspell-dev
 
 ADD ./supervisord.conf /etc/supervisor/supervisord.conf
+
+#Install Flask
+RUN pip install --user Flask
+
+#Install hunspell
+RUN pip install --user hunspell
 
 #Install textblob
 RUN pip install --user textblob
 RUN python -m textblob.download_corpora
 
-#Install Flask
-RUN pip install --user Flask
- 
 EXPOSE 9876
 
 CMD ["supervisord", "-n"]
