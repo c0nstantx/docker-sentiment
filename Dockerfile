@@ -15,7 +15,10 @@ RUN apt-get -y update &&\
 ADD ./supervisord.conf /etc/supervisor/supervisord.conf
 
 #Install textblob
-RUN pip install --user textblob
+RUN pip install -U textblob
+RUN pip install -U textblob-de
+RUN pip install -U textblob-fr
+
 RUN python -m textblob.download_corpora
 
 #Install Flask
@@ -24,3 +27,4 @@ RUN pip install --user Flask
 EXPOSE 9876
 
 CMD ["supervisord", "-n"]
+
